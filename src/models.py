@@ -19,10 +19,10 @@ class User(db.Model):
 
 class Planet(db.Model):
     __tablename__ = 'planet'
-    id = db.Column(Integer, primary_key=True)
-    planet_name = db.Column(String(50))
-    climate = db.Column(String(30))
-    population = db.Column(Integer, nullable=True)
+    id = db.Column(db.Integer, primary_key=True)
+    planet_name = db.Column(db.String(50))
+    climate = db.Column(db.String(30))
+    population = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
         return '<Planet %r>' % self.planet_name
@@ -35,12 +35,12 @@ class Planet(db.Model):
 
 class People(db.Model):
     __tablename__ = 'people'
-    id = db.Column(Integer, primary_key=True)
-    name = db.Column(String(100), nullable=False)
-    birth_date = db.Column(String(70), nullable=True)
-    gender = db.Column(String(10), nullable=False)
-    affilliation = db.Column(String(250), nullable=False)
-    planet_id = db.Column(Integer, ForeignKey('planet.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    birth_date = db.Column(db.String(70), nullable=True)
+    gender = db.Column(db.String(10), nullable=False)
+    affilliation = db.Column(db.String(250), nullable=False)
+    planet_id = db.Column(db.Integer, db.ForeignKey('planet.id'))
 
     def __repr__(self):
         return '<People %r>' % self.name
@@ -54,9 +54,9 @@ class People(db.Model):
 
 class FavoritePlanet(db.Model):
     __tablename__ = 'favorite planet'
-    id = db.Column(Integer, primary_key=True)
-    user_id = db.Column(Integer, ForeignKey('user.id'))
-    planet_id = db.Column(Integer, ForeignKey('planet.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    planet_id = db.Column(db.Integer, db.ForeignKey('planet.id'))
 
     def __repr__(self):
         return '<FavoritePlanet %r>' % self.id
@@ -69,9 +69,9 @@ class FavoritePlanet(db.Model):
 
 class FavoritePeople(db.Model):
     __tablename__ = 'favorite people'
-    id = db.Column(Integer, primary_key=True)
-    user_id = db.Column(Integer, ForeignKey('user.id'))
-    people_id = db.Column(Integer, ForeignKey('people.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    people_id = db.Column(db.Integer, db.ForeignKey('people.id'))
 
     def __repr__(self):
         return '<FavoritePeople %r>' % self.id
