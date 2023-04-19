@@ -36,7 +36,7 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@api.route('/people', methods=['GET'])  #se obtiene a todos los 'people'
+@app.route('/people', methods=['GET'])  #se obtiene a todos los 'people'
 def all_people():
     peoples=People.query.all()
     data=[people.serialize() for people in peoples]
@@ -44,7 +44,7 @@ def all_people():
     return jsonify(data), 200
 
 
-@api.route('/people/<int:people_id>', methods=['GET']) # se obtiene 'people' por id 
+@app.route('/people/<int:people_id>', methods=['GET']) # se obtiene 'people' por id 
 def get_people(people_id):
     peoples= People.query.filter_by(id=people_id).first()
     if peoples : 
@@ -53,14 +53,14 @@ def get_people(people_id):
     return jsonify({"msg": "Doesn´t exist"})    
 
 
-@api.route('/planet', methods=['GET'])     #se obtiene a todos los 'planet'
+@app.route('/planet', methods=['GET'])     #se obtiene a todos los 'planet'
 def all_planet():
     planets=Planet.query.all()
     data=[planet.serialize() for planet in planets]
 
     return jsonify(data), 200
 
-@api.route('/planet/<int:planet_id>', methods=['GET'])    # se obtiene 'planet' por id 
+@app.route('/planet/<int:planet_id>', methods=['GET'])    # se obtiene 'planet' por id 
 def get_planet(planet_id):
     planets= Planet.query.filter_by(id=planet_id).first()
     if planets : 
@@ -68,20 +68,20 @@ def get_planet(planet_id):
     
     return jsonify({"msg": "Doesn´t exist"})
 
-@api.route('/user', methods=['GET'])     #se obtiene todos los usuarios 
+@app.route('/user', methods=['GET'])     #se obtiene todos los usuarios 
 def all_user():
      users=User.query.all()
      data=[user.serialize() for user in users]
 
      return jsonify(data), 200
 
-@api.route('/user/favorite/<int:user_id>', methods=['GET'])  #Listar todos los favoritos que pertenecen al usuario actual (modificar).
+@app.route('/user/favorite/<int:user_id>', methods=['GET'])  #Listar todos los favoritos que pertenecen al usuario actual (modificar).
 def favorite_user(user_id):                                             
     favorites= Favorite.query.all(id=user_id)
     data = [favorite.serialize() for favorite in favorites]
     return jsonify(data),200
 
-@api.route('/favorite_planet', methods=['POST']) #añadir un nuevo 'planet' favorito (modificar).
+@app.route('/favorite_planet', methods=['POST']) #añadir un nuevo 'planet' favorito (modificar).
 def add_favorite_planet():
 
     data = request.json
@@ -91,7 +91,7 @@ def add_favorite_planet():
 
     return jsonify({"msg": "Your favorite cannot be added, wrong details"}), 400
 
-@api.route('/favorite_people', methods=['POST']) #añadir un nuevo 'people' favorito (modificar).
+@app.route('/favorite_people', methods=['POST']) #añadir un nuevo 'people' favorito (modificar).
 def add_favorite_people():
 
     data = request.json
@@ -102,8 +102,8 @@ def add_favorite_people():
     return jsonify({"msg": "Your favorite cannot be added, wrong details"}), 400
 
 
-@api.route('/delete_favorite_planet/<int:user_id>/<int:planet_id>', methods=['DELETE'])      #emilinar 'planet' favorito del usuario actual (modificar).
-def delete_favorite(user_id, planet_id):
+@app.route('/delete_favorite_planet/<int:user_id>/<int:planet_id>', methods=['DELETE'])      #emilinar 'planet' favorito del usuario actual (modificar).
+def delete_favorite_planet(user_id, planet_id):
     try:
         removeFavoritePlanet=FavoritePlanet(id=planet_id)
         db.session.delete(removeFavorite)
@@ -114,8 +114,8 @@ def delete_favorite(user_id, planet_id):
     return jsonify({"Favorite removed"})
 
 
-@api.route('/delete_favorite_people/<int:user_id>/<int:people_id>', methods=['DELETE'])      #emilinar 'people' favorito del usuario actual (modificar).
-def delete_favorite(user_id, people_id):
+@app.route('/delete_favorite_people/<int:user_id>/<int:people_id>', methods=['DELETE'])      #emilinar 'people' favorito del usuario actual (modificar).
+def delete_favorite_people(user_id, people_id):
     try:
         removeFavoritePeople=FavoritePeople(id=people_id)
         db.session.delete(removeFavorite)
